@@ -324,7 +324,7 @@ void noseTip(int cx, int cy, float heading_deg, int* tip_x, int* tip_y) {
   *tip_x = cx + static_cast<int>(lroundf(sinf(rad) * radar::kAircraftNoseLenPx));
   *tip_y = cy - static_cast<int>(lroundf(cosf(rad) * radar::kAircraftNoseLenPx));
 }
-
+drawHarbourOverlay();
 void drawShipSymbol(int cx, int cy, float heading_deg, uint16_t color) {
   constexpr float kDegToRad = 0.01745329252f;
   const float rad = heading_deg * kDegToRad;
