@@ -14,7 +14,7 @@
 #include "ui/radar_range.h"
 #include "ui/radar_theme.h"
 #include "ui/runway_overlay.h"
-
+#include "data/harbour_overlay.h"
 
 
 namespace ui {
