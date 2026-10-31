@@ -324,7 +324,7 @@ void noseTip(int cx, int cy, float heading_deg, int* tip_x, int* tip_y) {
   *tip_x = cx + static_cast<int>(lroundf(sinf(rad) * radar::kAircraftNoseLenPx));
   *tip_y = cy - static_cast<int>(lroundf(cosf(rad) * radar::kAircraftNoseLenPx));
 }
-drawHarbourOverlay();
+
 void drawShipSymbol(int cx, int cy, float heading_deg, uint16_t color) {
   constexpr float kDegToRad = 0.01745329252f;
   const float rad = heading_deg * kDegToRad;
@@ -365,19 +365,19 @@ void drawHarbourOverlay()
     {
         int x1, y1, x2, y2;
 
-        if (!latLonToRadar(
-                kHarbourLines[i].lat1,
-                kHarbourLines[i].lon1,
-                x1, y1))
-            continue;
+        latLonToScreen(
+            kHarbourLines[i].lat1,
+            kHarbourLines[i].lon1,
+            &x1,
+            &y1);
 
-        if (!latLonToRadar(
-                kHarbourLines[i].lat2,
-                kHarbourLines[i].lon2,
-                x2, y2))
-            continue;
+        latLonToScreen(
+            kHarbourLines[i].lat2,
+            kHarbourLines[i].lon2,
+            &x2,
+            &y2);
 
-        tft.drawLine(x1, y1, x2, y2, 0x07FF);
+        s_draw->drawLine(x1, y1, x2, y2, 0x07FF);
     }
 }
 void drawSpeedVector(int cx, int cy, float heading_deg, float track_deg,
@@ -699,8 +699,14 @@ void drawStaticGrid(Gfx& gfx) {
   drawRings(cx, cy, grid_r);
   drawCrosshairs(cx, cy, grid_r, radar::kColorGrid);
   initPalette();
-  runway::drawLargeAirportRunways(gfx);
-  drawCenterDot(cx, cy);
+ runway::drawLargeAirportRunways(gfx);
+
+{
+    const DrawScope scope(gfx);
+    drawHarbourOverlay();
+}
+
+drawCenterDot(cx, cy);
   drawCardinalLabels();
   drawScaleLabel(cx, cy, grid_r);
   gfx.setTextDatum(textdatum_t::top_left);
