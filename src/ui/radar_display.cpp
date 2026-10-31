@@ -359,7 +359,27 @@ void drawShipSymbol(int cx, int cy, float heading_deg, uint16_t color) {
                    stern_x - beam_x / 2, stern_y - beam_y / 2,
                    radar::kColorBackground);
 }
+void drawHarbourOverlay()
+{
+    for (int i = 0; i < kHarbourLineCount; i++)
+    {
+        int x1, y1, x2, y2;
 
+        if (!latLonToRadar(
+                kHarbourLines[i].lat1,
+                kHarbourLines[i].lon1,
+                x1, y1))
+            continue;
+
+        if (!latLonToRadar(
+                kHarbourLines[i].lat2,
+                kHarbourLines[i].lon2,
+                x2, y2))
+            continue;
+
+        tft.drawLine(x1, y1, x2, y2, 0x07FF);
+    }
+}
 void drawSpeedVector(int cx, int cy, float heading_deg, float track_deg,
                      float gs_knots, uint16_t color) {
   const int len = speedLineLengthPx(gs_knots);
