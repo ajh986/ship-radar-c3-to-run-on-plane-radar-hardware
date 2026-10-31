@@ -11,3 +11,4 @@ To flash the files you need to flash the files below I used online esptool to fl
 0x10000    firmware.bin
 
 This is my first attempt at using git hub so I hope I have not done anything I should not. 
+to set up once the screen is on follow the henrys cat set up for api keys etc thanks
